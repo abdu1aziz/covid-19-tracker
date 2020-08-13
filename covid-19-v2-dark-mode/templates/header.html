@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>{% block title %} {% endblock %} </title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/flags.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dark-mode/dark-mode.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom-mods.css') }}">
+	
+</head>
+<body>
+		<nav class="navbar navbar-secondary scrolling-navbar container">
+		  <div class="row">
+		    <a class="navbar-brand" href="/1">
+		          <img src="{{ url_for('static', filename='img/covid-19-logo.png') }}" alt="" height="48px" width="48px">
+		          <img style="display:inline;" src="{{ url_for('static', filename='img/corona-live-stats.gif') }}">
+		          <!-- special thanks to: https://textanim.com/ -->
+		        </a>
+		        <!-- <h2 id="totalCasesWorldWide" class="text-danger font-weight-bold">Total Cases: </h2> -->
+				    <form id="singleCountryLookup" style="display:inline;" class="form-inline my-2 my-lg-0">
+					    <div class="mt-5">
+						      <input id="countrySearch" name="countrySearch" class="form-control mr-sm-2" type="text" placeholder="Search">
+						      <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+					    </div>
+				    </form>
+
+
+			    <div class="">
+				    <a href="/1/ac" class="btn btn-outline-secondary text-center">Home</a>
+			    	<a href="/newCases" class="btn btn-outline-warning text-center">New Cases</a>
+				    <a href="/newDeaths" class="btn btn-outline-danger">New Deaths</a>
+				    <a href="/newRecovered" class="btn btn-outline-success">New Recovered</a>
+			    </div>
+
+				<div class="custom-control custom-switch ml-3 mt-3">
+				  <input type="checkbox" class="custom-control-input" id="darkSwitch" />
+				  <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+				</div>
+
+			    <br>
+
+			    <div id="errorAlert" class="alert alert-dismissible alert-danger" style="display:none;">
+				  <button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+		  </div>
+		</nav>
+
+<div id="singleModal" class="modal border-info">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+		    <a class="navbar-brand" href="#">
+		          <img src="{{ url_for('static', filename='img/covid-19-logo.png') }}" alt="" height="48px" width="48px">
+		          <img style="display:inline;" src="{{ url_for('static', filename='img/corona-live-stats.gif') }}" width="375px;">
+		          <!-- special thanks to: https://textanim.com/ -->
+		        </a>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	<div class="modal-body">
+		<table class="table table-sm">
+			  <thead class="text-danger">
+			    <tr>
+			      <th scope="col">Country</th>
+			      <th scope="col">New Cases</th>
+			      <th scope="col">Active</th>
+			      <th scope="col">Critical</th>
+			      <th scope="col">Recovered</th>
+			      <th scope="col">New Deaths</th>
+			      <th scope="col">Total Deaths</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			  	<tr class="btn-outline-warning">
+		          <th scope="row" id="singleReqCountryName"></th>
+		          <td class="" id="singleReqNewCases"></td>
+		          <td id="singleReqActive"></td>
+		          <td id="singleReqCritical"></td>
+		          <td id="singleReqRecovered"></td>
+		          <td id="singleReqNewDeaths"></td>
+		          <td id="singleReqTotalDeaths"></td>
+		        </tr>
+		       </tbody>
+		</table>
+	</div>
+     <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+			<div class="container mt-2">
+			    <form class="float-right" action="/" method="GET">
+			    	<label class="form-group">Sort By Filter: </label>
+			    	<select name="filter_value" id="filter_value">
+			    		<option value="nc">New Cases</option>
+			    		<option value="ac">Active</option>
+			    		<option value="cc">Critical</option>
+			    		<option value="nr">New Recovered</option>
+			    		<option value="nd">New Deaths</option>
+			    		<option value="td">Total Deaths</option>
+			    	</select>
+			    </form>
+			</div>
+
+
+
+	{% block content %} {% endblock %}
+
+
+
+</body>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='dark-mode/dark-mode-switch.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/countryLookup.js') }}"></script>
+			<script type="text/javascript">
+					  jQuery(function() {
+					    jQuery('#filter_value').change(function() {
+					        this.form.submit();
+					    });
+					});
+			</script>
+
+
+
+<!-- <script type="text/javascript" src="{{ url_for('static', filename='js/newCases.js') }}"></script> -->
+<!-- <script type="text/javascript" src="{{ url_for('static', filename='js/countrycodes.js') }}"></script> -->
+
+{% block script %} {% endblock %}
+
+</html>

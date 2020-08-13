@@ -1,0 +1,7 @@
+@media screen and (min-width: 768px) {
+	#countrySearch{
+		margin-left: 200px;
+	}
+}
+
+input[type="text"], select, option{background-color : #d1d1d1;}
